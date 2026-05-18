@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, use, useEffect, useRef, useMemo, useCallback } from 'react';
+import { useState, use, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { api, type GraphData } from '@/lib/api/client';
 
@@ -57,8 +57,8 @@ export default function GraphPage({ params }: { params: Promise<{ repoId: string
   };
 
   // Auto-load on mount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { loadGraph(); }, [repoId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+  useEffect(() => { void loadGraph(); }, [repoId]);
 
   const forceData = useMemo(() => graphData ? {
     nodes: graphData.nodes.map(n => ({

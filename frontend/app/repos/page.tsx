@@ -47,7 +47,7 @@ export default function ReposPage() {
       setDeleteError('Failed to delete repository');
       setTimeout(() => setDeleteError(null), 4000);
       // Revert if failed
-      try { const data = await api.listRepos(); setRepos(data); } catch {}
+      try { const data = await api.listRepos(); setRepos(data); } catch { /* ignore */ }
     }
   };
 

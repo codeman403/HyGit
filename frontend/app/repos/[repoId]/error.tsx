@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function RepoError({
   error,
@@ -25,9 +26,9 @@ export default function RepoError({
           <button onClick={reset} className="btn-primary text-sm">
             Try again
           </button>
-          <a href="/repos" className="btn-ghost text-sm">
+          <Link href="/repos" className="btn-ghost text-sm">
             Back to repos
-          </a>
+          </Link>
         </div>
       </div>
     </div>

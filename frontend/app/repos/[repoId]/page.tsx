@@ -2,13 +2,12 @@
 
 import { useState, useEffect, use } from 'react';
 import { api, type Repo } from '@/lib/api/client';
-import Link from 'next/link';
 
 export default function RepoOverviewPage({ params }: { params: Promise<{ repoId: string }> }) {
   const { repoId } = use(params);
   const [repo, setRepo] = useState<Repo | null>(null);
   const [provenanceFile, setProvenanceFile] = useState('');
-  const [provenance, setProvenance] = useState<any>(null);
+  const [provenance, setProvenance] = useState<Record<string, unknown> | null>(null);
   const [provenanceLoading, setProvenanceLoading] = useState(false);
 
   useEffect(() => {

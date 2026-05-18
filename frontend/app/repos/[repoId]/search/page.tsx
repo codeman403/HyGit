@@ -18,11 +18,11 @@ export default function SearchPage({ params }: { params: Promise<{ repoId: strin
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [pipelineSteps, setPipelineSteps] = useState<PipelineStep[]>(SEARCH_PIPELINE);
+  // basePipeline reflects current mode for display when not running
+  const displaySteps = pipelineSteps.some(s => s.status !== 'pending') ? pipelineSteps : basePipeline.map(s => ({ ...s, status: 'pending' as const }));
 
-  // Swap pipeline display when mode changes
-  useEffect(() => {
-    setPipelineSteps((mode === 'fast' ? SEARCH_PIPELINE_FAST : SEARCH_PIPELINE).map(s => ({ ...s, status: 'pending' })));
-  }, [mode]);
+  // Derive pipeline steps from mode — no effect needed
+  const basePipeline = mode === 'fast' ? SEARCH_PIPELINE_FAST : SEARCH_PIPELINE;
   const [repo, setRepo] = useState<Repo | null>(null);
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export default function SearchPage({ params }: { params: Promise<{ repoId: strin
           <div>
             <span className="section-label text-[10px]">( HydraDB Pipeline )</span>
             <div className="mt-3">
-              <HydraDBPipeline steps={pipelineSteps} />
+              <HydraDBPipeline steps={displaySteps} />
             </div>
           </div>
 
@@ -237,7 +237,7 @@ export default function SearchPage({ params }: { params: Promise<{ repoId: strin
               {exampleQueries.map(q => (
                 <button key={q} onClick={() => handleSearch(q)}
                   className="text-left p-3.5 rounded-xl border border-[var(--border-subtle)] text-[var(--text-tertiary)] text-xs hover:border-[var(--border-accent)] hover:text-[var(--accent)] transition-all leading-relaxed">
-                  "{q}"
+                  &quot;{q}&quot;
                 </button>
               ))}
             </div>
