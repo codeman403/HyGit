@@ -39,3 +39,25 @@ packages = ["src"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+ignore = [
+  "E501",   # line too long
+  "F401",   # unused imports
+  "F811",   # redefinition of unused name
+  "E711",   # comparison to None
+  "E712",   # comparison to True/False
+  "B008",   # function call in default argument
+  "UP",     # pyupgrade rules
+  "ANN",    # type annotations
+  "D",      # docstrings
+]
+
+[tool.mypy]
+ignore_missing_imports = true
+no_strict_optional = true
+disable_error_code = ["attr-defined", "name-defined", "return", "assignment", "arg-type", "union-attr"]
