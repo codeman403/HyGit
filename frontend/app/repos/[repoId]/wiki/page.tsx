@@ -21,6 +21,7 @@ export default function WikiPage({ params }: { params: Promise<{ repoId: string 
   const [error, setError] = useState('');
   const [repo, setRepo] = useState<Repo | null>(null);
   const [discoveredModules, setDiscoveredModules] = useState<string[]>([]);
+  const [modulesLoading, setModulesLoading] = useState(true);
 
   useEffect(() => {
     api.getRepoStatus(repoId).then(setRepo).catch(() => {});
@@ -29,7 +30,7 @@ export default function WikiPage({ params }: { params: Promise<{ repoId: string 
       if (res.articles.length > 0) {
         setDiscoveredModules(res.articles.map(a => a.module_path));
       }
-    }).catch(() => {});
+    }).catch(() => {}).finally(() => setModulesLoading(false));
   }, [repoId]);
 
   const ghBase = repo ? `https://github.com/${repo.owner}/${repo.name}` : null;
@@ -44,7 +45,7 @@ export default function WikiPage({ params }: { params: Promise<{ repoId: string 
     'authentication', 'api routes', 'database layer', 'middleware',
     'utilities', 'testing', 'configuration', 'error handling',
   ];
-  const presetModules = discoveredModules.length > 0 ? discoveredModules.slice(0, 8) : fallbackModules;
+  const presetModules = modulesLoading ? [] : (discoveredModules.length > 0 ? discoveredModules.slice(0, 8) : fallbackModules);
 
   const generateArticle = async (module: string) => {
     setGenerating(true); setError('');
@@ -86,6 +87,13 @@ export default function WikiPage({ params }: { params: Promise<{ repoId: string 
 
           <div className="mb-2">
             <p className="text-[10px] text-[var(--text-tertiary)] mb-1.5 font-medium">Generate article:</p>
+            {modulesLoading && (
+              <div className="space-y-1.5 animate-pulse">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="h-6 bg-[var(--bg-elevated)] rounded-md" />
+                ))}
+              </div>
+            )}
             <div className="space-y-0.5">
               {presetModules.map(mod => (
                 <button key={mod} onClick={() => generateArticle(mod)} disabled={generating}

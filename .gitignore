@@ -256,3 +256,12 @@ backend/repos_db.json
 backend/test_*.py
 backend/delete_tenants.py
 
+# Assets - recording artifacts (keep only thumbnail)
+assets/screenshots/
+assets/*.mp4
+assets/record_demo.js
+assets/DEMO_RECORDING_GUIDE.md
+assets/node_modules/
+assets/package.json
+assets/package-lock.json
+
