@@ -92,6 +92,7 @@ jobs:
         env:
           NEXT_PUBLIC_API_URL: http://localhost:8000
           NEXT_TELEMETRY_DISABLED: 1
+          TURBOPACK: 0
 
   # ─── Docker: Build validation ─────────────────────────────────────────────
   docker-build:
