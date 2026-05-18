@@ -7,7 +7,7 @@
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://hy-git.vercel.app)
 
 🌐 **Live App:** [https://hy-git.vercel.app](https://hy-git.vercel.app)  
-🔧 **API:** [https://hygit.onrender.com](https://hygit.onrender.com)
+🔧 **API:** [https://hygit.onrender.com](https://hygit.onrender.com/health)
 
 ---
 
