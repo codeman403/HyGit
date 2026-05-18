@@ -216,3 +216,43 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ── Node / Next.js ────────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+.vercel
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Next.js standalone output
+.next/standalone/
+.next/static/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Secrets (never commit)
+backend/.env
+*.env.local
+*.env.production
+
+# Local dev data
+backend/repos_db.json
+
+# Ad-hoc test scripts (not part of test suite)
+backend/test_*.py
+backend/delete_tenants.py
+

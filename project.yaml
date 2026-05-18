@@ -1,0 +1,162 @@
+name: HyGit
+slug: hygit
+description: Auto-generated Wikipedia for any GitHub repo — powered by HydraDB context graphs
+target_users: Software engineers, engineering managers, new hires, open-source contributors
+core_value_prop: Point at any GitHub repo and get a living wiki that explains WHY the code exists with full provenance
+
+features:
+  - name: Repo Ingestion
+    slug: repo-ingestion
+    description: Ingest GitHub repo (code, commits, issues, PRs, review comments) into HydraDB
+    category: core
+    priority: mvp
+    complexity: complex
+    ai_powered: false
+    pages: ["/ingest"]
+    endpoints: ["POST /api/v1/repos/ingest", "GET /api/v1/repos/{id}/status"]
+    background_jobs: ["ingest_github_repo"]
+
+  - name: Provenance Engine
+    slug: provenance
+    description: Given any file/function, trace its full story through HydraDB graph traversal
+    category: core
+    priority: mvp
+    complexity: complex
+    ai_powered: true
+    pages: ["/repos/{id}/files"]
+    endpoints: ["GET /api/v1/repos/{id}/provenance", "POST /api/v1/repos/{id}/query"]
+
+  - name: Wiki Browser
+    slug: wiki-browser
+    description: Auto-generated Wikipedia articles for each module with cross-references and citations
+    category: core
+    priority: mvp
+    complexity: complex
+    ai_powered: true
+    pages: ["/repos/{id}/wiki", "/repos/{id}/wiki/{article}"]
+    endpoints: ["GET /api/v1/repos/{id}/wiki", "GET /api/v1/repos/{id}/wiki/{slug}"]
+
+  - name: Codebase Recovery
+    slug: codebase-recovery
+    description: Identify orphaned files with no active maintainer and reconstruct their origin stories
+    category: core
+    priority: mvp
+    complexity: complex
+    ai_powered: true
+    pages: ["/repos/{id}/reports/recovery"]
+    endpoints: ["GET /api/v1/repos/{id}/reports/recovery"]
+
+  - name: Unwritten Rules
+    slug: unwritten-rules
+    description: Extract undocumented conventions from PR review patterns
+    category: core
+    priority: mvp
+    complexity: complex
+    ai_powered: true
+    pages: ["/repos/{id}/reports/conventions"]
+    endpoints: ["GET /api/v1/repos/{id}/reports/conventions"]
+
+  - name: Graph View
+    slug: graph-view
+    description: Interactive knowledge graph visualization of the codebase relationships
+    category: core
+    priority: mvp
+    complexity: medium
+    ai_powered: false
+    real_time: false
+    pages: ["/repos/{id}/graph"]
+    endpoints: ["GET /api/v1/repos/{id}/graph-data"]
+
+  - name: Live Query
+    slug: live-query
+    description: Ask anything about the codebase with grounded answers citing commits/PRs/issues
+    category: core
+    priority: mvp
+    complexity: complex
+    ai_powered: true
+    real_time: true
+    pages: ["/repos/{id}/search"]
+    endpoints: ["POST /api/v1/repos/{id}/search"]
+
+ai_config:
+  models:
+    - provider: openai
+      model: gpt-4o
+      use_case: Wiki generation, provenance analysis, convention extraction
+      max_tokens: 4000
+      temperature: 0.3
+      cost_per_1k_tokens: 0.005
+    - provider: openai
+      model: gpt-4o-mini
+      use_case: Quick summaries, status updates, short answers
+      max_tokens: 1000
+      temperature: 0.5
+      cost_per_1k_tokens: 0.0002
+  pipelines:
+    - feature_slug: provenance
+      steps: ["hydradb_full_recall_thinking", "graph_context_traversal", "llm_synthesize_narrative"]
+      primary_model: gpt-4o
+      fallback_model: gpt-4o-mini
+      input_schema: {file_path: string, repo_tenant_id: string}
+      output_schema: {narrative: string, sources: list, graph_paths: list}
+      estimated_tokens: 3500
+      cache_strategy: semantic
+    - feature_slug: wiki-browser
+      steps: ["entity_identification", "hydradb_full_recall_thinking", "llm_generate_article"]
+      primary_model: gpt-4o
+      fallback_model: gpt-4o-mini
+      input_schema: {module: string, tenant_id: string}
+      output_schema: {title: string, content: string, references: list}
+      estimated_tokens: 5000
+      cache_strategy: semantic
+    - feature_slug: codebase-recovery
+      steps: ["identify_orphaned_files", "hydradb_recall_per_file", "llm_generate_verdict"]
+      primary_model: gpt-4o
+      fallback_model: gpt-4o-mini
+      input_schema: {tenant_id: string}
+      output_schema: {orphaned_files: list}
+      estimated_tokens: 4000
+      cache_strategy: exact
+    - feature_slug: unwritten-rules
+      steps: ["boolean_recall_pr_reviews", "cluster_patterns", "llm_extract_conventions"]
+      primary_model: gpt-4o
+      fallback_model: gpt-4o-mini
+      input_schema: {tenant_id: string}
+      output_schema: {conventions: list}
+      estimated_tokens: 5000
+      cache_strategy: exact
+    - feature_slug: live-query
+      steps: ["hydradb_full_recall_thinking", "hydradb_boolean_recall", "llm_answer_with_citations"]
+      primary_model: gpt-4o
+      fallback_model: gpt-4o-mini
+      input_schema: {query: string, tenant_id: string}
+      output_schema: {answer: string, citations: list, graph_paths: list}
+      estimated_tokens: 4000
+      cache_strategy: none
+  monthly_budget: 100.0
+  safety_filters: true
+
+billing:
+  provider: none
+  model: none
+  trial_days: 0
+  tiers: []
+
+infra:
+  deployment: vercel+flyio
+  auth: none
+  database: none
+  cache: none
+  storage: none
+  email: none
+  analytics: none
+
+scale: startup
+data_sensitivity: low
+real_time_needed: true
+file_storage_needed: false
+team_collaboration: false
+
+github_org: codeman403
+repo_name: HyGit
+license: MIT
