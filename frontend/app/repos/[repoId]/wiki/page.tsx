@@ -25,8 +25,8 @@ export default function WikiPage({ params }: { params: Promise<{ repoId: string 
 
   useEffect(() => {
     api.getRepoStatus(repoId).then(setRepo).catch(() => {});
-    // Fetch dynamically discovered modules from the actual repo
-    api.getWikiList(repoId, true).then(res => {
+    // Fetch existing articles to populate sidebar module list (no generation)
+    api.getWikiList(repoId, false).then(res => {
       if (res.articles.length > 0) {
         setDiscoveredModules(res.articles.map(a => a.module_path));
       }
