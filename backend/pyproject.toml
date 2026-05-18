@@ -20,6 +20,8 @@ dependencies = [
     "sqlalchemy[asyncio]>=2.0.0",
     # Redis async client
     "redis[asyncio]>=5.0.0",
+    # Rate limiting
+    "slowapi>=0.1.9",
 ]
 
 [project.optional-dependencies]
