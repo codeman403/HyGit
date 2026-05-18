@@ -81,7 +81,7 @@ function Typewriter({ text }: { text: string }) {
   );
 }
 
-function FlashStat({ val }: { val: string }) {
+function FlashStat({ val }: { val: string; delay?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: false, margin: '-80px' });
   const [color, setColor] = useState('#FFFFFF');

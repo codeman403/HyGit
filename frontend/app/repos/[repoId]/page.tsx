@@ -7,7 +7,8 @@ export default function RepoOverviewPage({ params }: { params: Promise<{ repoId:
   const { repoId } = use(params);
   const [repo, setRepo] = useState<Repo | null>(null);
   const [provenanceFile, setProvenanceFile] = useState('');
-  const [provenance, setProvenance] = useState<Record<string, unknown> | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [provenance, setProvenance] = useState<any>(null);
   const [provenanceLoading, setProvenanceLoading] = useState(false);
 
   useEffect(() => {

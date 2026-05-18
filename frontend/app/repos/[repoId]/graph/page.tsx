@@ -159,7 +159,7 @@ export default function GraphPage({ params }: { params: Promise<{ repoId: string
               if (globalScale < 1.5) return;
               const l = link as GraphLink & { source: GraphNode; target: GraphNode };
               if (typeof l.source === 'string' || typeof l.target === 'string') return;
-              if (l.source?.x == null || l.target?.x == null) return;
+              if (l.source?.x == null || l.source?.y == null || l.target?.x == null || l.target?.y == null) return;
               const mx = (l.source.x + l.target.x) / 2;
               const my = (l.source.y + l.target.y) / 2;
               const fontSize = Math.max(6, 9 / globalScale);

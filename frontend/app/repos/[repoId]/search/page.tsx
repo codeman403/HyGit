@@ -18,11 +18,10 @@ export default function SearchPage({ params }: { params: Promise<{ repoId: strin
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [pipelineSteps, setPipelineSteps] = useState<PipelineStep[]>(SEARCH_PIPELINE);
-  // basePipeline reflects current mode for display when not running
-  const displaySteps = pipelineSteps.some(s => s.status !== 'pending') ? pipelineSteps : basePipeline.map(s => ({ ...s, status: 'pending' as const }));
-
   // Derive pipeline steps from mode — no effect needed
   const basePipeline = mode === 'fast' ? SEARCH_PIPELINE_FAST : SEARCH_PIPELINE;
+  // basePipeline reflects current mode for display when not running
+  const displaySteps = pipelineSteps.some(s => s.status !== 'pending') ? pipelineSteps : basePipeline.map(s => ({ ...s, status: 'pending' as const }));
   const [repo, setRepo] = useState<Repo | null>(null);
 
   useEffect(() => {
