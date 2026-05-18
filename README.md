@@ -278,8 +278,6 @@ docker compose up --build
 
 HyGit was built for the **WikiThon hackathon** — *"Build anything that generates a Wikipedia-like knowledge base from any source."*
 
-We took that challenge and aimed it at the most complex, underdocumented source of knowledge most engineers deal with daily: their own codebase.
-
 ---
 
 ## 📄 License
