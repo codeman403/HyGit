@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npm run build",
+  "buildCommand": "next build --no-turbopack",
   "outputDirectory": ".next",
   "env": {
     "NEXT_PUBLIC_API_URL": "@hygit_api_url"
