@@ -104,14 +104,14 @@ export default function WikiPage({ params }: { params: Promise<{ repoId: string 
             </div>
           </div>
 
-          <form onSubmit={handleCustom} className="mt-3 flex gap-1.5">
+          <form onSubmit={handleCustom} className="mt-3 flex gap-1.5 overflow-hidden">
             <input
               value={customModule} onChange={e => setCustomModule(e.target.value)}
               placeholder="custom module..." disabled={generating}
-              className="flex-1 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg px-3 py-2 text-xs text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--border-accent)] disabled:opacity-40"
+              className="min-w-0 flex-1 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg px-3 py-2 text-xs text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--border-accent)] disabled:opacity-40"
             />
             <button type="submit" disabled={generating || !customModule.trim()}
-              className="btn-primary text-[10px] px-2.5 py-1.5 flex-shrink-0 disabled:opacity-40">→</button>
+              className="btn-primary text-[10px] px-2 py-1.5 flex-shrink-0 w-7 flex items-center justify-center disabled:opacity-40">→</button>
           </form>
         </div>
       </aside>
